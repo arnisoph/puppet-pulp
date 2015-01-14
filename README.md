@@ -7,41 +7,20 @@ This puppet module is for installing + configuring Pulp and is based on [KrisBuy
 ## TODO
 
 * Improve schedule plans
-* Improve pulp::server::postinstall
 
 ## Usage
 
-
 pulp server:
 ```puppet
-class {'pulp': repo_enabled => true, } -> class{'pulp::server': }
+class {'pulp::server': }
 ```
 
-pulp client/agent:
+pulp consumer:
 ```puppet
-class {'pulp': repo_enabled => true, } -> class{'pulp::client': }
+class {'pulp::consumer': }
 ```
 
-pulp admin tool:
+pulp admin:
 ```puppet
-class {'pulp': repo_enabled => true, } -> class{'pulp::admin': }
-```
-
-All components with the pulp project yum repository enabled:
-```puppet
-class {'pulp':
-  repo_enabled => true,
-}
-->
-
-class {'pulp::server':
-}
-->
-
-class {'pulp::admin':
-}
-->
-
-class {'pulp::client':
-}
+class {'pulp::admin': }
 ```

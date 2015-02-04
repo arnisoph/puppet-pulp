@@ -96,7 +96,7 @@ auth_enabled: false
 # = Asynchronous Tasks =
 
 [tasks]
-broker_url: <%= scope.lookupvar('pulp::server::broker_url') %>
+broker_url: <%= scope.lookupvar('pulp::server::broker_url') %>/
 
 
 # = Email =

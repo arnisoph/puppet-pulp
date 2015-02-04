@@ -1,35 +1,40 @@
 # == Class: pulp::server::service
 #
-# This class sets the desired states for the installed services
-#
-# === Parameters
-#
-# === Examples
-#
-# === Authors
-#
-# Arnold Bechtoldt <arnold.bechtoldt@dm.de>
-#
-# === Copyright
-#
-# see LICENSE
-#
 class pulp::server::service {
-  service { 'qpid_service':
-    ensure  => 'running',
-    name    => $pulp::qpid_servicename,
-    enable  => $pulp::qpid_srv_enable,
+
+  if $::pulp::server::ensure_workers == 'running' {
+    $enable_workers = true
+  } else {
+    $enable_workers = false
   }
-  ->
-  service { 'mongodb_service':
-    ensure  => 'running',
-    name    => $pulp::mongodb_servicename,
-    enable  => $pulp::mongodb_srv_enable,
+
+  if $::pulp::server::ensure_resource_manager == 'running' {
+    $enable_resource_manager = true
+  } else {
+    $enable_resource_manager = false
   }
-  ->
-  service { 'httpd_service':
-    ensure  => 'running',
-    name    => $pulp::httpd_servicename,
-    enable  => $pulp::httpd_srv_enable,
+
+  if $::pulp::server::ensure_celerybeat == 'running' {
+    $enable_celerybeat = true
+  } else {
+    $enable_celerybeat = false
+  }
+
+  service { $::pulp::server::workers_servicename:
+    ensure     => $::pulp::server::ensure_workers,
+    enable     => $enable_workers,
+    hasrestart => true,
+  }
+
+  service { $::pulp::server::resource_manager_servicename:
+    ensure     => $::pulp::server::ensure_resource_manager,
+    enable     => $enable_resource_manager,
+    hasrestart => true,
+  }
+
+  service { $::pulp::server::celerybeat_servicename:
+    ensure     => $::pulp::server::ensure_celerybeat,
+    enable     => $enable_celerybeat,
+    hasrestart => true,
   }
 }

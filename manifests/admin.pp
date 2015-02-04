@@ -1,26 +1,23 @@
-# == Class: pulp::adminclient
+# == Class: pulp::admin
 #
-# This class implements the management of the pulp admin client (API client)
-#
-# === Parameters
-#
-# === Examples
-#
-# === Authors
-#
-# Arnold Bechtoldt <arnold.bechtoldt@dm.de>
-#
-# === Copyright
-#
-# see LICENSE
-#
-class pulp::admin {
+class pulp::admin (
+  $server_host      = $::fqdn,
+  $server_port      = '443',
+  $admin_verify_ssl = true,
+  $admin_ca_path    = '/etc/pki/tls/certs/ca-bundle.crt',
+  $admin_packages   = $::pulp::params::admin_packages,
+) inherits pulp::params {
 
-  anchor {"${name}::begin": }
-  ->
-  class {"${name}::install": }
-  ->
-  class {"${name}::config": }
-  ->
-  anchor {"${name}::end": }
+  validate_string($server_host)
+  validate_string($server_port)
+  validate_bool($admin_verify_ssl)
+  validate_string($admin_ca_path)
+  validate_array($admin_packages)
+
+  contain ::pulp::admin::install
+  contain ::pulp::admin::config
+
+  Class["${name}::install"]
+  -> Class["${name}::config"]
 }
+

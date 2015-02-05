@@ -10,7 +10,6 @@ seeds: <%= scope.lookupvar('pulp::server::mongodb_seeds').join(',')%>
 username: <%= scope.lookupvar('pulp::server::mongodb_username') %>
 #user: <%= scope.lookupvar('pulp::server::mongodb_username') %>
 password: <%= scope.lookupvar('pulp::server::mongodb_password') %>
-#operation_retries: 2
 <% if ! scope.lookupvar('pulp::server::mongodb_repl_set').empty? %>
 replica_set: <%= scope.lookupvar('pulp::server::mongodb_repl_set') %>
 <% end %>

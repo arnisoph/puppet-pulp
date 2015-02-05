@@ -27,9 +27,6 @@ class pulp::server (
   $enable_workers               = false,
   $enable_resource_manager      = false,
   $enable_celerybeat            = false,
-  $ensure_workers               = $::pulp::params::ensure_workers,
-  $ensure_resource_manager      = $::pulp::params::ensure_resource_manager,
-  $ensure_celerybeat            = $::pulp::params::ensure_celerybeat,
   $server_packages              = $::pulp::params::server_packages,
   $httpd_servicename            = $::pulp::params::httpd_servicename,
   $workers_servicename          = $::pulp::params::workers_servicename,
@@ -64,9 +61,6 @@ class pulp::server (
   validate_bool($enable_workers)
   validate_bool($enable_resource_manager)
   validate_bool($enable_celerybeat)
-  validate_string($ensure_workers)
-  validate_string($ensure_resource_manager)
-  validate_string($ensure_celerybeat)
   validate_array($server_packages)
   validate_string($httpd_servicename)
   validate_string($workers_servicename)

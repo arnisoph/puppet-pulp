@@ -2,39 +2,39 @@
 #
 class pulp::server::service {
 
-  if $::pulp::server::ensure_workers == 'running' {
-    $enable_workers = true
+  if $::pulp::server::enable_workers {
+    $ensure_workers = 'running'
   } else {
-    $enable_workers = false
+    $ensure_workers = 'stopped'
   }
 
-  if $::pulp::server::ensure_resource_manager == 'running' {
-    $enable_resource_manager = true
+  if $::pulp::server::enable_resource_manager {
+    $ensure_resource_manager = 'running'
   } else {
-    $enable_resource_manager = false
+    $ensure_resource_manager = 'stopped'
   }
 
-  if $::pulp::server::ensure_celerybeat == 'running' {
-    $enable_celerybeat = true
+  if $::pulp::server::enable_celerybeat {
+    $ensure_celerybeat = 'running'
   } else {
-    $enable_celerybeat = false
+    $ensure_celerybeat = 'stopped'
   }
 
   service { $::pulp::server::workers_servicename:
-    ensure     => $::pulp::server::ensure_workers,
-    enable     => $enable_workers,
+    ensure     => $ensure_workers,
+    enable     => $::pulp::server::enable_workers,
     hasrestart => true,
   }
 
   service { $::pulp::server::resource_manager_servicename:
-    ensure     => $::pulp::server::ensure_resource_manager,
-    enable     => $enable_resource_manager,
+    ensure     => $ensure_resource_manager,
+    enable     => $::pulp::server::enable_resource_manager,
     hasrestart => true,
   }
 
   service { $::pulp::server::celerybeat_servicename:
-    ensure     => $::pulp::server::ensure_celerybeat,
-    enable     => $enable_celerybeat,
+    ensure     => $ensure_celerybeat,
+    enable     => $::pulp::server::enable_celerybeat,
     hasrestart => true,
   }
 }

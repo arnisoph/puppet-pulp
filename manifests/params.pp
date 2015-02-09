@@ -20,25 +20,4 @@ class pulp::params {
       fail("Unsupported OS: ${::operatingsystem}")
     }
   }
-
-  if $::pulp::servers::enable_workers {
-    $ensure_workers = 'running'
-  } else {
-    $ensure_workers = 'stopped'
-  }
-
-  if $::pulp::servers::enable_resource_manager {
-    $ensure_resource_manager = 'running'
-  } else {
-    $ensure_resource_manager = 'stopped'
-  }
-
-  if $::pulp::servers::enable_celerybeat {
-    $ensure_celerybeat = 'running'
-  } else {
-    $ensure_celerybeat = 'stopped'
-  }
-
-
-
 }

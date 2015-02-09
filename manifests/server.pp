@@ -13,9 +13,10 @@ class pulp::server (
   $mail_from                    = 'no-reply@your.domain',
 
   $mongodb_database             = 'pulp_database',
+  $mongodb_auth                 = true,
   $mongodb_username             = 'pulp',
   $mongodb_password             = 'pulp',
-  $mongodb_repl_set             = '',
+  $mongodb_repl_set             = 'replset0',
   $mongodb_seeds                = ['localhost'],
   $mongodb_manage               = true,
 
@@ -27,9 +28,6 @@ class pulp::server (
   $enable_workers               = false,
   $enable_resource_manager      = false,
   $enable_celerybeat            = false,
-  $ensure_workers               = $::pulp::params::ensure_workers,
-  $ensure_resource_manager      = $::pulp::params::ensure_resource_manager,
-  $ensure_celerybeat            = $::pulp::params::ensure_celerybeat,
   $server_packages              = $::pulp::params::server_packages,
   $httpd_servicename            = $::pulp::params::httpd_servicename,
   $workers_servicename          = $::pulp::params::workers_servicename,
@@ -50,6 +48,7 @@ class pulp::server (
   validate_string($mail_from)
 
   validate_string($mongodb_database)
+  validate_bool($mongodb_auth)
   validate_string($mongodb_username)
   validate_string($mongodb_password)
   validate_string($mongodb_repl_set)
@@ -64,9 +63,6 @@ class pulp::server (
   validate_bool($enable_workers)
   validate_bool($enable_resource_manager)
   validate_bool($enable_celerybeat)
-  validate_string($ensure_workers)
-  validate_string($ensure_resource_manager)
-  validate_string($ensure_celerybeat)
   validate_array($server_packages)
   validate_string($httpd_servicename)
   validate_string($workers_servicename)

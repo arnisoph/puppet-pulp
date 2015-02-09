@@ -92,7 +92,7 @@ define pulp::repo (
   case $command {
     'present': {
       $cmd = 'create'
-      $unless = "/usr/bin/pulp-admin repo list | grep '^Id:\s*${repo_id}'"
+      $unless = "/usr/bin/pulp-admin repo list --fields=Id | grep -c '^Id:\s*${repo_id}\$'"
       $onlyif = '/bin/true'
     }
     'update': {
@@ -103,7 +103,7 @@ define pulp::repo (
     'absent': {
       $cmd = 'delete'
       $unless = '/bin/false'
-      $onlyif = "/usr/bin/pulp-admin repo list | grep '^Id:\s*${repo_id}'"
+      $onlyif = "/usr/bin/pulp-admin repo list --fields=Id | grep -c '^Id:\s*${repo_id}\$'"
     }
     default: {
       fail("Unsupported command: ${command}!")
@@ -112,10 +112,10 @@ define pulp::repo (
 
   if $always_renew_session {
     exec {"pulp_renew_session_for_${repo_id}":
-      command   => "/usr/bin/pulp-admin login -u ${pulp::default_login} -p ${pulp::default_password}",
+      command   => "/usr/bin/pulp-admin login -u ${pulp::server::default_login} -p ${pulp::server::default_password}",
       logoutput => true,
       before    => Exec["manage_repo_${repo_id}"],
-      unless    => '/usr/bin/pulp-admin repo list',
+      unless    => '/usr/bin/pulp-admin repo list --fields=Id',
     }
   }
 

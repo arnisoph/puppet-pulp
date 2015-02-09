@@ -6,10 +6,11 @@
 
 [database]
 name: <%= scope.lookupvar('pulp::server::mongodb_database') %>
-seeds: <%= scope.lookupvar('pulp::server::mongodb_seeds').join(',')%>
+seeds: <%= scope.lookupvar('pulp::server::mongodb_seeds').join(',') %>
+<%- if scope.lookupvar('pulp::server::mongodb_auth') %>
 username: <%= scope.lookupvar('pulp::server::mongodb_username') %>
-#user: <%= scope.lookupvar('pulp::server::mongodb_username') %>
 password: <%= scope.lookupvar('pulp::server::mongodb_password') %>
+<%- end %>
 <% if ! scope.lookupvar('pulp::server::mongodb_repl_set').empty? %>
 replica_set: <%= scope.lookupvar('pulp::server::mongodb_repl_set') %>
 <% end %>

@@ -13,9 +13,10 @@ class pulp::server (
   $mail_from                    = 'no-reply@your.domain',
 
   $mongodb_database             = 'pulp_database',
+  $mongodb_auth                 = true,
   $mongodb_username             = 'pulp',
   $mongodb_password             = 'pulp',
-  $mongodb_repl_set             = '',
+  $mongodb_repl_set             = 'replset0',
   $mongodb_seeds                = ['localhost'],
   $mongodb_manage               = true,
 
@@ -47,6 +48,7 @@ class pulp::server (
   validate_string($mail_from)
 
   validate_string($mongodb_database)
+  validate_bool($mongodb_auth)
   validate_string($mongodb_username)
   validate_string($mongodb_password)
   validate_string($mongodb_repl_set)

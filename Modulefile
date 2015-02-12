@@ -1,5 +1,5 @@
 name    'lxdm-pulp'
-version '0.0.2'
+version '0.2'
 source 'git@github.com:filiadatagmbh/puppet-pulp.git'
 author 'lxdm'
 license 'GNU GPL v2'

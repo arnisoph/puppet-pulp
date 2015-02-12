@@ -28,10 +28,3 @@ class {'pulp::consumer': }
 ```puppet
 class {'pulp::admin': }
 ```
-
-### Pulp Node
-
-```puppet
-class {'pulp::node': }
-```
-

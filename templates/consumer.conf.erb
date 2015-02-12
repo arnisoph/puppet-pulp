@@ -1,0 +1,80 @@
+# ===========================
+# Pulp Consumer Configuration
+# ===========================
+
+# = Server =
+
+[server]
+host: <%= scope.lookupvar('pulp::consumer::server_host') %>
+port: <%= scope.lookupvar('pulp::consumer::server_port') %>
+# api_prefix: /pulp/api
+# rsa_pub: /etc/pki/pulp/consumer/server/rsa_pub.key
+verify_ssl: <%= scope.lookupvar('pulp::consumer::verify_ssl') %>
+# ca_path = /etc/pki/tls/certs/ca-bundle.crt
+
+
+# = Authentication =
+
+[authentication]
+# rsa_key: /etc/pki/pulp/consumer/rsa.key
+# rsa_pub: /etc/pki/pulp/consumer/rsa_pub.key
+
+
+# = Client settings =
+
+[client]
+# role: consumer
+
+
+# = Location of resources on the consumer file system =
+
+[filesystem]
+# extensions_dir: /usr/lib/pulp/consumer/extensions
+# repo_file: /etc/yum.repos.d/pulp.repo
+# mirror_list_dir: /etc/yum.repos.d
+# gpg_keys_dir: /etc/pki/pulp-gpg-keys
+# cert_dir: /etc/pki/pulp/client/repo
+# id_cert_dir: /etc/pki/pulp/consumer/
+# id_cert_filename: consumer-cert.pem
+
+
+# = Reboot settings =
+
+[reboot]
+# permit: False
+# delay: 3
+
+
+# = Client logging =
+
+[logging]
+# filename: ~/.pulp/consumer.log
+# call_log_filename: ~/.pulp/consumer_server_calls.log
+
+
+# = Consumer client output =
+
+[output]
+# poll_frequency_in_seconds: 1
+# enable_color: true
+# wrap_to_terminal: false
+# wrap_width: 80
+
+
+# = Agent messaging =
+
+[messaging]
+scheme: <%= scope.lookupvar('pulp::consumer::messaging_scheme') %>
+host: <%= scope.lookupvar('pulp::consumer::messaging_host') %>
+port: <%= scope.lookupvar('pulp::consumer::messaging_port') %>
+transport: <%= scope.lookupvar('pulp::consumer::messaging_transport') %>
+<%- if scope.lookupvar('pulp::consumer::messaging_cacert') %>
+cacert: <%= scope.lookupvar('pulp::consumer::messaging_cacert') %>
+clientcert: <%= scope.lookupvar('pulp::consumer::messaging_clientcert') %>
+<%- end %>
+
+
+# = Profile reporting =
+
+[profile]
+# minutes: 240

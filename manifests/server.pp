@@ -4,12 +4,12 @@ class pulp::server (
   $default_login                = 'admin',
   $default_password             = 'admin',
   $server_host                  = $::fqdn,
-  $server_port                  = '443',
+  $server_port                  = 443,
   $repo_enabled                 = false,
 
   $mail_enabled                 = false,
   $mail_host                    = 'localhost',
-  $mail_host_port               = '25',
+  $mail_host_port               = 25,
   $mail_from                    = 'no-reply@your.domain',
 
   $mongodb_database             = 'pulp_database',
@@ -22,8 +22,8 @@ class pulp::server (
 
   $messaging_url                = 'tcp://localhost:5672',
   $broker_url                   = 'qpid://guest@localhost/',
-  $migrate_attempts             = '3',
-  $migrate_wait_secs            = '5',
+  $migrate_attempts             = 3,
+  $migrate_wait_secs            = 5,
 
   $enable_workers               = false,
   $enable_resource_manager      = false,
@@ -39,12 +39,16 @@ class pulp::server (
   validate_string($default_login)
   validate_string($default_password)
   validate_string($server_host)
-  validate_string($server_port)
+  if ! is_integer($server_port) {
+    fail("pulp::server::server_port `${server_port}' is not an interger")
+  }
   validate_bool($repo_enabled)
 
   validate_bool($mail_enabled)
   validate_string($mail_host)
-  validate_string($mail_host_port)
+  if ! is_integer($mail_host_port) {
+    fail("pulp::server::mail_host_port `${mail_host_port}' is not an interger")
+  }
   validate_string($mail_from)
 
   validate_string($mongodb_database)
@@ -57,8 +61,12 @@ class pulp::server (
 
   validate_string($messaging_url)
   validate_string($broker_url)
-  validate_string($migrate_attempts)
-  validate_string($migrate_wait_secs)
+  if ! is_integer($migrate_attempts) {
+    fail("pulp::server::migrate_attempts `${migrate_attempts}' is not an interger")
+  }
+  if ! is_integer($migrate_wait_secs) {
+    fail("pulp::server::migrate_wait_secs `${migrate_wait_secs}' is not an interger")
+  }
 
   validate_bool($enable_workers)
   validate_bool($enable_resource_manager)

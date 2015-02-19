@@ -20,6 +20,15 @@ class pulp::server (
   $mongodb_seeds                = ['localhost'],
   $mongodb_manage               = true,
 
+  $reaper_interval              = 0.25,
+  $archived_calls               = 0.5,
+  $consumer_history             = 60,
+  $repo_sync_history            = 60,
+  $repo_publish_history         = 60,
+  $repo_group_publish_history   = 60,
+  $task_status_history          = 7,
+  $task_result_history          = 3,
+
   $messaging_url                = 'tcp://localhost:5672',
   $broker_url                   = 'qpid://guest@localhost/',
   $migrate_attempts             = 3,
@@ -40,14 +49,14 @@ class pulp::server (
   validate_string($default_password)
   validate_string($server_host)
   if ! is_integer($server_port) {
-    fail("pulp::server::server_port `${server_port}' is not an interger")
+    fail("pulp::server::server_port `${server_port}' is not an integer value")
   }
   validate_bool($repo_enabled)
 
   validate_bool($mail_enabled)
   validate_string($mail_host)
   if ! is_integer($mail_host_port) {
-    fail("pulp::server::mail_host_port `${mail_host_port}' is not an interger")
+    fail("pulp::server::mail_host_port `${mail_host_port}' is not an integer value")
   }
   validate_string($mail_from)
 
@@ -59,13 +68,38 @@ class pulp::server (
   validate_array($mongodb_seeds)
   validate_bool($mongodb_manage)
 
+  if ! is_float($reaper_interval) {
+    fail("pulp::server::reaper_interval `${reaper_interval}' is not a float value")
+  }
+  if ! is_float($archived_calls) {
+    fail("pulp::server::archived_calls `${archived_calls}' is not a float value")
+  }
+  if ! is_integer($consumer_history) {
+    fail("pulp::server::consumer_history `${consumer_history}' is not an integer value")
+  }
+  if ! is_integer($repo_sync_history) {
+    fail("pulp::server::repo_sync_history `${repo_sync_history}' is not an integer value")
+  }
+  if ! is_integer($repo_publish_history) {
+    fail("pulp::server::repo_publish_history `${repo_publish_history}' is not an integer value")
+  }
+  if ! is_integer($repo_group_publish_history) {
+    fail("pulp::server::repo_group_publish_history `${repo_group_publish_history}' is not an integer value")
+  }
+  if ! is_integer($task_status_history) {
+    fail("pulp::server::task_status_history `${task_status_history}' is not an integer value")
+  }
+  if ! is_integer($task_result_history) {
+    fail("pulp::server::task_result_history `${task_result_history}' is not an integer value")
+  }
+
   validate_string($messaging_url)
   validate_string($broker_url)
   if ! is_integer($migrate_attempts) {
-    fail("pulp::server::migrate_attempts `${migrate_attempts}' is not an interger")
+    fail("pulp::server::migrate_attempts `${migrate_attempts}' is not an integer value")
   }
   if ! is_integer($migrate_wait_secs) {
-    fail("pulp::server::migrate_wait_secs `${migrate_wait_secs}' is not an interger")
+    fail("pulp::server::migrate_wait_secs `${migrate_wait_secs}' is not an integer value")
   }
 
   validate_bool($enable_workers)
